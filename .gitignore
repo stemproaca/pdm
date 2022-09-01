@@ -127,3 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# new 2022-08-30
+**/.ipynb_checkpoints/
