@@ -112,10 +112,10 @@ class DataUtility(object):
 
     def prepare_dfs(self, use_pd = True, sep = " "):
         """
-            docstring
             this function generates all the data for our project
             input: use_pd -- use pandas or not
                     sep -- field separator
+            output: df_train, df_test, df_result
         """
         columns=["id","cycle","op1","op2","op3","sensor1","sensor2","sensor3","sensor4","sensor5","sensor6","sensor7","sensor8",
             "sensor9","sensor10","sensor11","sensor12","sensor13","sensor14","sensor15","sensor16","sensor17","sensor18","sensor19"
