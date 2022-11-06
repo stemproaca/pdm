@@ -148,8 +148,8 @@ class DataUtility(object):
         #df_test[["rul_failed", "remaining_rul"]] = df_test[["rul_failed", "remaining_rul"]].astype(int)
         return df_train, df_test, df_result
 
-""" test
+
 if __name__ == "__main__":
     data_loader = DataUtility()
     df_train, df_test, df_result = data_loader.prepare_dfs()
-"""
+    
