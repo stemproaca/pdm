@@ -16834,12 +16834,12 @@ Bayesian linear regression is a form of regression analysis technique used in ma
 </div>
 </div>
 
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[214]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">reg</span> <span class="o">=</span> <span class="n">linear_model</span><span class="o">.</span><span class="n">SGDRegressor</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s1">&#39;squared_error&#39;</span><span class="p">,</span>   <span class="n">penalty</span><span class="o">=</span><span class="s1">&#39;l2&#39;</span><span class="p">)</span>  
@@ -16854,72 +16854,6 @@ Bayesian linear regression is a form of regression analysis technique used in ma
      </div>
 </div>
 </div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>
-<span class="ansi-red-intense-fg ansi-bold">---------------------------------------------------------------------------</span>
-<span class="ansi-red-intense-fg ansi-bold">ValueError</span>                                Traceback (most recent call last)
-Input <span class="ansi-green-intense-fg ansi-bold">In [214]</span>, in <span class="ansi-cyan-fg">&lt;cell line: 4&gt;</span><span class="ansi-blue-intense-fg ansi-bold">()</span>
-<span class="ansi-green-fg">      2</span> reg<span style="color: rgb(98,98,98)">.</span>fit(X_train, y_train)  
-<span class="ansi-green-fg">      3</span> predictions <span style="color: rgb(98,98,98)">=</span> reg<span style="color: rgb(98,98,98)">.</span>predict(X_test)
-<span class="ansi-green-intense-fg ansi-bold">----&gt; 4</span> r2 <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">r2_score</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">y_test</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">predictions</span><span class="ansi-yellow-bg">)</span> 
-<span class="ansi-green-fg">      5</span> mae <span style="color: rgb(98,98,98)">=</span> mean_absolute_error( y_test, predictions)
-<span class="ansi-green-fg">      6</span> mse <span style="color: rgb(98,98,98)">=</span> mean_squared_error( y_test, predictions)
-
-File <span class="ansi-green-intense-fg ansi-bold">~\anaconda3\lib\site-packages\sklearn\metrics\_regression.py:789</span>, in <span class="ansi-cyan-fg">r2_score</span><span class="ansi-blue-intense-fg ansi-bold">(y_true, y_pred, sample_weight, multioutput)</span>
-<span class="ansi-green-fg">    702</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span> <span style="color: rgb(0,0,255)">r2_score</span>(y_true, y_pred, <span style="color: rgb(98,98,98)">*</span>, sample_weight<span style="color: rgb(98,98,98)">=</span><span class="ansi-bold" style="color: rgb(0,135,0)">None</span>, multioutput<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">uniform_average</span><span style="color: rgb(175,0,0)">&#34;</span>):
-<span class="ansi-green-fg">    703</span>     <span style="color: rgb(175,0,0)">&#34;&#34;&#34;:math:`R^2` (coefficient of determination) regression score function.</span>
-<span class="ansi-green-fg">    704</span> 
-<span class="ansi-green-fg">    705</span> <span style="color: rgb(175,0,0)">    Best possible score is 1.0 and it can be negative (because the</span>
-<span class="ansi-green-intense-fg ansi-bold">   (...)</span>
-<span class="ansi-green-fg">    787</span> <span style="color: rgb(175,0,0)">    -3.0</span>
-<span class="ansi-green-fg">    788</span> <span style="color: rgb(175,0,0)">    &#34;&#34;&#34;</span>
-<span class="ansi-green-intense-fg ansi-bold">--&gt; 789</span>     y_type, y_true, y_pred, multioutput <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">_check_reg_targets</span><span class="ansi-yellow-bg">(</span>
-<span class="ansi-green-fg">    790</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">y_true</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">y_pred</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">multioutput</span>
-<span class="ansi-green-fg">    791</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-fg">    792</span>     check_consistent_length(y_true, y_pred, sample_weight)
-<span class="ansi-green-fg">    794</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> _num_samples(y_pred) <span style="color: rgb(98,98,98)">&lt;</span> <span style="color: rgb(98,98,98)">2</span>:
-
-File <span class="ansi-green-intense-fg ansi-bold">~\anaconda3\lib\site-packages\sklearn\metrics\_regression.py:94</span>, in <span class="ansi-cyan-fg">_check_reg_targets</span><span class="ansi-blue-intense-fg ansi-bold">(y_true, y_pred, multioutput, dtype)</span>
-<span class="ansi-green-fg">     60</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span> <span style="color: rgb(0,0,255)">_check_reg_targets</span>(y_true, y_pred, multioutput, dtype<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">numeric</span><span style="color: rgb(175,0,0)">&#34;</span>):
-<span class="ansi-green-fg">     61</span>     <span style="color: rgb(175,0,0)">&#34;&#34;&#34;Check that y_true and y_pred belong to the same regression task.</span>
-<span class="ansi-green-fg">     62</span> 
-<span class="ansi-green-fg">     63</span> <span style="color: rgb(175,0,0)">    Parameters</span>
-<span class="ansi-green-intense-fg ansi-bold">   (...)</span>
-<span class="ansi-green-fg">     92</span> <span style="color: rgb(175,0,0)">        the dtype argument passed to check_array.</span>
-<span class="ansi-green-fg">     93</span> <span style="color: rgb(175,0,0)">    &#34;&#34;&#34;</span>
-<span class="ansi-green-intense-fg ansi-bold">---&gt; 94</span>     <span class="ansi-yellow-bg">check_consistent_length</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">y_true</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">y_pred</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-fg">     95</span>     y_true <span style="color: rgb(98,98,98)">=</span> check_array(y_true, ensure_2d<span style="color: rgb(98,98,98)">=</span><span class="ansi-bold" style="color: rgb(0,135,0)">False</span>, dtype<span style="color: rgb(98,98,98)">=</span>dtype)
-<span class="ansi-green-fg">     96</span>     y_pred <span style="color: rgb(98,98,98)">=</span> check_array(y_pred, ensure_2d<span style="color: rgb(98,98,98)">=</span><span class="ansi-bold" style="color: rgb(0,135,0)">False</span>, dtype<span style="color: rgb(98,98,98)">=</span>dtype)
-
-File <span class="ansi-green-intense-fg ansi-bold">~\anaconda3\lib\site-packages\sklearn\utils\validation.py:332</span>, in <span class="ansi-cyan-fg">check_consistent_length</span><span class="ansi-blue-intense-fg ansi-bold">(*arrays)</span>
-<span class="ansi-green-fg">    330</span> uniques <span style="color: rgb(98,98,98)">=</span> np<span style="color: rgb(98,98,98)">.</span>unique(lengths)
-<span class="ansi-green-fg">    331</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> <span style="color: rgb(0,135,0)">len</span>(uniques) <span style="color: rgb(98,98,98)">&gt;</span> <span style="color: rgb(98,98,98)">1</span>:
-<span class="ansi-green-intense-fg ansi-bold">--&gt; 332</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">raise</span> <span class="ansi-bold" style="color: rgb(215,95,95)">ValueError</span>(
-<span class="ansi-green-fg">    333</span>         <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">Found input variables with inconsistent numbers of samples: </span><span class="ansi-bold" style="color: rgb(175,95,135)">%r</span><span style="color: rgb(175,0,0)">&#34;</span>
-<span class="ansi-green-fg">    334</span>         <span style="color: rgb(98,98,98)">%</span> [<span style="color: rgb(0,135,0)">int</span>(l) <span class="ansi-bold" style="color: rgb(0,135,0)">for</span> l <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> lengths]
-<span class="ansi-green-fg">    335</span>     )
-
-<span class="ansi-red-intense-fg ansi-bold">ValueError</span>: Found input variables with inconsistent numbers of samples: [38, 6190]</pre>
-</div>
-</div>
-
-</div>
-
 </div>
 
 </div>

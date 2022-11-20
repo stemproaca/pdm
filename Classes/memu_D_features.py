@@ -1,3 +1,49 @@
+from  sklearn.feature_selection import VarianceThreshold
+from collections import Counter
+from copy import deepcopy 
+from dtaidistance import dtw, dtw_ndim
+from fitter import Fitter, get_common_distributions, get_distributions
+from IPython.display import display, Markdown, Image
+from kneed import DataGenerator, KneeLocator
+from scipy.fft import fft, ifft
+from scipy.stats import pearsonr 
+from sklearn import decomposition
+from sklearn import ensemble 
+from sklearn import kernel_ridge
+from sklearn import linear_model 
+from sklearn import model_selection
+from sklearn import svm 
+from sklearn import tree  
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import classification_report, confusion_matrix, roc_curve
+from sklearn.metrics import mean_squared_error, mean_absolute_error
+from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error 
+from sklearn.model_selection import GridSearchCV 
+from sklearn.model_selection import KFold, cross_val_score, train_test_split
+from sklearn.model_selection import RepeatedKFold
+from sklearn.model_selection import train_test_split
+from sklearn.pipeline import make_pipeline, Pipeline
+from sklearn.preprocessing import minmax_scale
+from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler
+from sklearn.preprocessing import Normalizer
+from sklearn.preprocessing import scale
+from sklearn.utils import class_weight
+from statsmodels.stats.outliers_influence import variance_inflation_factor
+from statsmodels.tsa.stattools import adfuller 
+import catboost  
+import lightgbm 
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+import missingno as mn 
+import numpy as np
+import os
+import pandas as pd
+import random
+import re
+import seaborn as sns
+import sys
+import time   
+import warnings
 
 class SelectingEDAFeatures(object):
     def __init__(self, per_missing=0.50, dominant_threshold= 0.95, \
@@ -183,7 +229,7 @@ class SelectingEDAFeatures(object):
             doc:
             helper function
         """
-        constant_cols = self.round_one_remove_low_variance() 
+        constant_cols = self.identify_constants() 
         return [c for c in self.all_feature_columsn if c not in constant_cols] 
     
     def heatmap_plot(self, show_fig=True, pre_filtered_cols=None ):
@@ -279,12 +325,13 @@ class SelectingEDAFeatures(object):
         """
         missing = self.indentify_missing()
         const = self.identify_constants()
-        flats = self.identify_flat_dispersion()
+        flats, _ = self.identify_flat_dispersion()
         _, vif = self.identify_high_vif_columns()
         
-        to_remove = missing + const + flats + vif 
-        
-        return [c for c in all_feature_columsn if c not in to_remove]
+        to_remove = list(missing) + list(const) + list(flats) + list(vif) 
+      
+        return [c for c in self.all_feature_columsn if c not in to_remove]
     
         
-        
+fs = SelectingEDAFeatures()
+FEATS = fs.eda_features()
