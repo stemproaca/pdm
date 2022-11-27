@@ -1,3 +1,4 @@
+
 from  sklearn.feature_selection import VarianceThreshold
 from collections import Counter
 from copy import deepcopy 
@@ -69,6 +70,7 @@ class SelectingEDAFeatures(object):
         """
             documentation: 
             identify missing
+            missingno
         """ 
         tmp = DF_TRAIN.copy()  
         #masks = np.random.choice([True, False], size=tmp.shape, p = [p, 1-p])
@@ -94,7 +96,7 @@ class SelectingEDAFeatures(object):
         feats =  list(tmp)
 
         # compare it in two way: threshold = 0  
-        vt = VarianceThreshold(threshold=0)
+        vt = VarianceThreshold(threshold=0) #恒值
         _ = vt.fit_transform(tmp)
         kept_columns = vt.get_feature_names_out() 
 
@@ -333,5 +335,3 @@ class SelectingEDAFeatures(object):
         return [c for c in self.all_feature_columsn if c not in to_remove]
     
         
-fs = SelectingEDAFeatures()
-FEATS = fs.eda_features()
