@@ -1,0 +1,2 @@
+MSE,std_MSE,alpha,epochs,nodes,dropout,activation,batch_size,sequence_length,sensor_length
+1163.497823079427,209.44716287823775,0.05,15,"[128, 256]",0.3,tanh,32,30,1
