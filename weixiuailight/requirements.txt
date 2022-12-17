@@ -1,0 +1,18 @@
+# TensorFlow is much easier to install using Anaconda, especially
+# on Windows or when using a GPU. Please see the installation
+# instructions in INSTALL.md
+
+##### Core scientific packages
+pandas
+scipy
+
+##### Machine Learning packages
+scikit-learn
+
+# Optional: the XGBoost library is only used in chapter 7
+xgboost
+lightgbm
+
+# Efficient jobs (caching, parallelism, persistence)
+joblib
+json
