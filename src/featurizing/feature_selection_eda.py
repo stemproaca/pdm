@@ -48,13 +48,14 @@ from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler
 from sklearn.metrics import classification_report, confusion_matrix, roc_curve
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 
-CURRENT_FILE_PATH = os.path.dirname(os.path.abspath(__file__))
-CURRENT_FILE_PATH_PARENT = os.path.dirname(CURRENT_FILE_PATH)
-PRPOJECT_PATH = os.path.dirname(CURRENT_FILE_PATH_PARENT)
-FEATURE_FILE = CURRENT_FILE_PATH + "/FeatureCSV.csv"
+PWD = os.environ["PWD"]
+SCRIPT_DIR  = os.environ["SCRIPT_DIR"]
+MODEL_DIR = os.environ["MODEL_DIR"]
+FEATURE_FILE = MODEL_DIR+'/'+os.environ["FEATURE_FILE"]
+REPORT_FOLDER  = PWD+'/reports'
 
-sys.path.append(CURRENT_FILE_PATH_PARENT)
-from data.data_utility import DataUtility
+sys.path.append(SCRIPT_DIR)
+from preparing.data_utility import DataUtility
 
 # Feature Selection
 class SelectingEDAFeatures(DataUtility):
@@ -102,11 +103,10 @@ class SelectingEDAFeatures(DataUtility):
         self.max_vif = max_vif
         self.DF_TRAIN, _, _= self.load_data_by_flags(flags=flags)
 
-        self.report_folder = PRPOJECT_PATH
         if not excel_file:
-            excel_file = self.report_folder + f"/reports/EDA_Reports{datetime.strftime(datetime.now(), '%Y%m%d%H')}.xlsx"
+            excel_file =  REPORT_FOLDER + f"/EDA_Reports{datetime.strftime(datetime.now(), '%Y%m%d%H')}.xlsx"
         self.excel_file = excel_file
-        self.tmp_png = self.report_folder + f"/reports/tmp_{datetime.strftime(datetime.now(), '%Y%m%d%H')}.png"
+        self.tmp_png = REPORT_FOLDER + f"/tmp_{datetime.strftime(datetime.now(), '%Y%m%d%H')}.png"
 
         self.prepare_excel_report(re_create_excel=re_create_excel)
 

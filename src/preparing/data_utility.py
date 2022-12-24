@@ -12,6 +12,9 @@ CURRENT_FILE_PATH = os.path.dirname(os.path.abspath(__file__))
 CURRENT_FILE_PATH_PARENT = os.path.dirname(CURRENT_FILE_PATH)
 DATAFOLDER = os.path.dirname(CURRENT_FILE_PATH_PARENT)
 
+
+RAW_DATAFOLDER = os.environ["RAW_DATAFOLDER"]
+
 # Data Utility
 class DataUtility(object):
     """

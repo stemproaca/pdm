@@ -29,7 +29,7 @@ CURRENT_FILE_PATH_PARENT = os.path.dirname(CURRENT_FILE_PATH)
 PRPOJECT_PATH = os.path.dirname(CURRENT_FILE_PATH_PARENT)
 sys.path.append(CURRENT_FILE_PATH_PARENT)
 
-from data.data_utility import DataUtility
+from preparing.data_utility import DataUtility
 
 # Feature Research. MRO
 class ExcelUtility(DataUtility):

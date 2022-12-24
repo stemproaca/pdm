@@ -2,33 +2,37 @@ import os
 import re
 import sys
 import pickle
-from copy import deepcopy
-
-import pandas as pd
-import numpy as np
 import random
+import numpy as np
+import pandas as pd
+import tensorflow as tf
+from copy import deepcopy
 import matplotlib.pyplot as plt
 import seaborn as sns; sns.set()
-
-
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error, r2_score
-from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import GroupShuffleSplit
-
-import tensorflow as tf
 from tensorflow.keras import Sequential
-from tensorflow.keras.layers import LSTM, Dense, Dropout, Masking, TimeDistributed
 from tensorflow.keras.models import load_model
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import GroupShuffleSplit
+from sklearn.metrics import mean_squared_error, r2_score
+from tensorflow.keras.layers import LSTM, Dense, Dropout, Masking, TimeDistributed
 
-CURRENT_FILE_PATH = os.path.dirname(os.path.abspath(__file__))
-CURRENT_FILE_PATH_PARENT = os.path.dirname(CURRENT_FILE_PATH)
-PRPOJECT_PATH = os.path.dirname(CURRENT_FILE_PATH_PARENT)
-FEATUREFILE = CURRENT_FILE_PATH_PARENT+"/features/FeatureCSV.csv"
+# CURRENT_FILE_PATH = os.path.dirname(os.path.abspath(__file__))
+# CURRENT_FILE_PATH_PARENT = os.path.dirname(CURRENT_FILE_PATH)
+# PRPOJECT_PATH = os.path.dirname(CURRENT_FILE_PATH_PARENT)
+# FEATUREFILE = CURRENT_FILE_PATH_PARENT+"/features/FeatureCSV.csv"
 
-sys.path.append(CURRENT_FILE_PATH_PARENT)
-from data.data_utility import DataUtility
-from features.feature_selection_eda import SelectingEDAFeatures
+MODEL_DIR = os.environ["MODEL_DIR"]
+MODEL_FILE_FIRST = os.environ["MODEL_FILE_FIRST"]
+MODEL_FILE_SECOND = os.environ["MODEL_FILE_SECOND"]
+MODEL_RESULT_FILE_FIRST = os.environ["MODEL_RESULT_FILE_FIRST"]
+MODEL_RESULT_FILE_SECOND = os.environ["MODEL_RESULT_FILE_SECOND"]
+SCRIPT_DIR = os.environ["SCRIPT_DIR"]
+FEATUREFILE = MODEL_DIR + "/FeatureCSV.csv"
+
+sys.path.append(SCRIPT_DIR)
+from preparing.data_utility import DataUtility
+from featurizing.feature_selection_eda import SelectingEDAFeatures
 from serving.excel_reporting import ExcelUtility
 
 seed = 42
@@ -310,6 +314,7 @@ class RulLSTM(DataUtility):
             _, model = self.build_model()
         else:
             model = load_model(model_file)
+            sequence_length = -1
 
         if not param_file:
             batch_size = self.batch_size
@@ -364,13 +369,13 @@ class RulLSTM(DataUtility):
 
         return X_train_interim, X_test_interim
 
-    def search_params(self, interations = 20, start_from_all_sensors=False):
+    def full_train(self, interations = 20, start_from_all_sensors=False):
         results = pd.DataFrame(columns=['MSE', 'std_MSE', 'alpha', # bigger std means less robust
                                         'epochs', 'nodes', 'dropout',
                                         'activation', 'batch_size',
                                         'sequence_length', 'sensor_length'])
 
-        weights_file = f'{CURRENT_FILE_PATH}/lstm_hyper_parameter_weights.h5'
+        weights_file = f'{MODEL_DIR}/lstm_hyper_parameter_weights.h5'
 
         alpha_list = [0.01, 0.05] + list(np.arange(10,60+1,10)/100)
 
@@ -493,27 +498,27 @@ class RulLSTM(DataUtility):
                  'sensor_length':len(remaining_sensors)}
             results = results.append(pd.DataFrame(result, index=[0]), ignore_index=True)
 
-        if not os.path.exists(PRPOJECT_PATH+"/results"):
-            os.mkdir(PRPOJECT_PATH+"/results")
+        if not os.path.exists(self.MODEL_DIR):
+            os.mkdir(self.MODEL_DIR)
 
-        result_file = PRPOJECT_PATH+"/results/nn_lstm_results.csv"
-        arch_history = PRPOJECT_PATH+"/results/nn_lstm_history"
+        result_file = self.MODEL_DIR+"/nn_lstm_results.csv"
+        arch_history = self.MODEL_DIR+"/nn_lstm_history"
 
         results.to_csv(result_file, index=False)
         for k,v in best_two.items():
-            model_file = PRPOJECT_PATH+f"/results/{self.best_model_file_prefix}_{k}.h5"
+            model_file = MODEL_DIR+f"/{self.best_model_file_prefix}_{k}.h5"
             v["model"].save(model_file)
             with open(f'{arch_history}_{k}', 'wb') as file_pi:
                 pickle.dump(history.history, file_pi)
-            model_param_file = PRPOJECT_PATH+f"/results/{self.best_model_file_prefix}_{k}.csv"
+            model_param_file = MODEL_DIR +f"/{self.best_model_file_prefix}_{k}.csv"
             data_ = pd.DataFrame({"batch_size": [v["batch_size"]], "sequence_length":[v["sequence_length"]],
                     "sensor_length": [v["sensor_length"]]})
             data_.to_csv(model_param_file, index=False)
 
         return best_two
 
-
-lst = RulLSTM()
-bt = lst.search_params()
-results = lst.predict(lst.df_test, model_file=PRPOJECT_PATH+"/results/rul_lstm_n_first.h5", param_file = PRPOJECT_PATH+"/results/rul_lstm_n_first.csv")
-print(results)
+if __name__ == "__main__":
+    lst = RulLSTM()
+    bt = lst.search_params()
+    results = lst.predict()
+    print(results)

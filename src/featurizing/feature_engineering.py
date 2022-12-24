@@ -40,8 +40,8 @@ CURRENT_FILE_PATH_PARENT = os.path.dirname(CURRENT_FILE_PATH)
 PRPOJECT_PATH = os.path.dirname(CURRENT_FILE_PATH_PARENT)
 
 sys.path.append(CURRENT_FILE_PATH_PARENT)
-from data.data_utility import DataUtility
-from features.feature_selection_eda import SelectingEDAFeatures
+from preparing.data_utility import DataUtility
+from featurizing.feature_selection_eda import SelectingEDAFeatures
 from serving.excel_reporting import ExcelUtility
 
 class FeatureResearch(ExcelUtility, DataUtility):
